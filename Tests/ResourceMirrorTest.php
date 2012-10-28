@@ -18,6 +18,8 @@ class ResourceMirrorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * A resource mirror returns the base URL.
+     *
+     * @depends testCreate
      */
     public function testGetBaseUrl()
     {
@@ -27,6 +29,8 @@ class ResourceMirrorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * A resource mirror returns the directory.
+     *
+     * @depends testCreate
      */
     public function testGetDirectory()
     {
