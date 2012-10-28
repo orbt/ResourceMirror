@@ -26,6 +26,16 @@ class GenericResourceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * A generic resource is not created for a path with a trailing slash.
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCreatePathTrailingSlash()
+    {
+        new GenericResource('path/');
+    }
+
+    /**
      * A generic resource is not created for denormalized path.
      *
      * @expectedException \InvalidArgumentException

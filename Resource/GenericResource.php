@@ -28,10 +28,12 @@ class GenericResource implements Resource
             if ($path[0] == '/') {
                 throw new \InvalidArgumentException('Path must not be absolute.');
             }
+            if (substr($path, -1) == '/') {
+                throw new \InvalidArgumentException('Path must not have a trailing slash.');
+            }
             if (strpos($path, '..') !== false) {
                 throw new \InvalidArgumentException('Path must be normalized.');
             }
-            $path = rtrim($path, '/');
         }
         $this->path = $path;
     }
