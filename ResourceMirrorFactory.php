@@ -30,11 +30,15 @@ class ResourceMirrorFactory
      *
      * @param string $baseUrl
      *   Base URL of the mirror server, i.e. the server hosting resources materialized by the mirror.
+     * @param string $directory
+     *   Base directory used by the mirror.
      * @param EventDispatcherInterface $dispatcher
      *   Optional event dispatcher to override the dispatcher this factory was originally created with.
+     * @return ResourceMirror
+     *   A new resource mirror object.
      */
-    public function createMirror($baseUrl, EventDispatcherInterface $dispatcher = NULL)
+    public function createMirror($baseUrl, $directory, EventDispatcherInterface $dispatcher = NULL)
     {
-        return new ResourceMirror(isset($dispatcher) ? $dispatcher : $this->dispatcher, $baseUrl);
+        return new ResourceMirror(isset($dispatcher) ? $dispatcher : $this->dispatcher, $baseUrl, $directory);
     }
 }
