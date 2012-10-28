@@ -28,16 +28,14 @@ class MaterializedResource extends GenericResource implements Materialized
      *   Directory containing resource file.
      *
      * @throws \InvalidArgumentException
-     *   If the resource does not exist.
+     *   If the resource is already materialized or does not exist.
      */
     public function __construct($resource, $directory)
     {
         if ($resource instanceof MaterializedResource) {
-            $this->resource = $resource->getResource();
+            throw new \InvalidArgumentException('Resource is already materialized.');
         }
-        else {
-            $this->resource = $resource;
-        }
+        $this->resource = $resource;
         $this->path = $this->resource->getPath();
         $this->directory = rtrim($directory, '/'.DIRECTORY_SEPARATOR);
 
