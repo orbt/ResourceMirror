@@ -18,6 +18,8 @@ class FileReplicatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * A file replicator replicates a file from the base URL to the directory.
+     *
+     * @depends testCreate
      */
     public function testReplicate()
     {
@@ -27,6 +29,30 @@ class FileReplicatorTest extends \PHPUnit_Framework_TestCase
         $file = $directory.'/test';
         $this->assertTrue(file_exists($file));
         $this->assertGreaterThan(0, filesize($file));
+    }
+
+    /**
+     * A file replicator does not replicate from a bad base URL.
+     *
+     * @depends testCreate
+     * @expectedException \Orbt\ResourceMirror\Exception\ReplicatorException
+     */
+    public function testReplicateBadBaseUrl()
+    {
+        $replicator = new FileReplicator('invalid://invalid/', sys_get_temp_dir());
+        $replicator->replicate(new GenericResource('test'));
+    }
+
+    /**
+     * A file replicator does not replicate to a bad directory.
+     *
+     * @depends testCreate
+     * @expectedException \Orbt\ResourceMirror\Exception\ReplicatorException
+     */
+    public function testReplicateBadDirectory()
+    {
+        $replicator = new FileReplicator('http://example.com/', '/probably/a/bad/directory');
+        $replicator->replicate(new GenericResource('test'));
     }
 
     protected function generateDirectory()
