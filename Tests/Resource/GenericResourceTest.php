@@ -16,16 +16,6 @@ class GenericResourceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * A generic resource is not created for an empty path.
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testCreateEmptyPath()
-    {
-        new GenericResource('');
-    }
-
-    /**
      * A generic resource is not created for an absolute path.
      *
      * @expectedException \InvalidArgumentException
@@ -54,6 +44,19 @@ class GenericResourceTest extends \PHPUnit_Framework_TestCase
     {
         $resource = new GenericResource('test');
         $this->assertEquals('test', $resource->getPath());
+    }
+
+    /**
+     * A generic resource returns an array of path segments.
+     *
+     * @depends testCreate
+     */
+    public function testGetPathSegments()
+    {
+        $resource = new GenericResource('a/b');
+        $this->assertEquals(array('a', 'b'), $resource->getPathSegments());
+        $resource = new GenericResource('');
+        $this->assertEmpty($resource->getPathSegments());
     }
 
     /**
