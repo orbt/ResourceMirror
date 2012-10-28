@@ -3,6 +3,8 @@
 namespace Orbt\ResourceMirror;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Orbt\ResourceMirror\Event\ResourceMaterializeEvent;
+use Orbt\ResourceMirror\Event\ResourceEvents;
 use Orbt\ResourceMirror\Resource\Collection;
 use Orbt\ResourceMirror\Exception\MaterializeException;
 use Orbt\ResourceMirror\Resource\FileReplicator;
@@ -147,8 +149,15 @@ class ResourceMirror
 
         if ($overwrite || !$this->exists($resource)) {
             $this->getReplicator()->replicate($resource);
+            $materialized = true;
         }
-        return new MaterializedResource($resource, $this->getDirectory());
+
+        $materializedResource = new MaterializedResource($resource, $this->getDirectory());
+        if (!empty($materialized)) {
+            $this->dispatcher->dispatch(ResourceEvents::MATERIALIZE, new ResourceMaterializeEvent($materializedResource));
+        }
+
+        return $materializedResource;
     }
 
     /**
