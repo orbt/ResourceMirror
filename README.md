@@ -8,10 +8,10 @@ further actions, e.g. on resources that have just been materialized.
 This library contains these main components:
 
 * `ResourceMirror`: Main handler for materializing resources given a path on a specified base URL.
-* `Resource`: Interface for accessing resources and maintaining metadata about resources in order for the mirror to use
-  them. This interface has these variants:
-  * `UrlResource`: Indicating a resource with a path relative to a base URL in a `ResourceMirror`.
-  * `UnmaterializedResource`: Indicating a resource has a relative URL but has not been materialized.
+* `Resource`: Interface for accessing resources and maintaining metadata about resources for the mirror to use.
+* `GenericResource`: Base resource type. A generic resource can resolve another relative path based on itself.
+* `Materialized`: Interface for accessing resource content. A `MaterializedResource` can be constructed around a
+  `Resource` once it has been materialized and is accessible.
 * `ResourceCollection`: A collection of resources. Some utilities can accept a collection of resources and produce a new
   collection with completely different resources (e.g. by aggregating them).
 * `ResourceEvent`: Event dispatched containing a resource collection.
