@@ -24,7 +24,7 @@ class Collection implements \IteratorAggregate
     /**
      * Adds a new resource.
      *
-     * @param Resource $resource
+     * @param \Orbt\ResourceMirror\Resource\Resource $resource
      *   Resource object.
      * @return static
      *   This collection, for fluent interface.
