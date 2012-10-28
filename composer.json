@@ -1,0 +1,22 @@
+{
+    "name": "orbt/resource-mirror",
+    "type": "library",
+    "description": "Resource Mirror",
+    "keywords": [],
+    "homepage": "http://github.com/orbt/ResourceProcessor",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Taihao Zhang",
+            "email": "jason@zth.me"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/event-dispatcher": ">=2.0.0,<2.2-dev"
+    },
+    "autoload": {
+        "psr-0": { "Orbt\\ResourceMirror\\": "" }
+    },
+    "target-dir": "Orbt/ResourceMirror"
+}
