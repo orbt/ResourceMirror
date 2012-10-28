@@ -43,7 +43,7 @@ class ResourceMirror
     public function __construct(EventDispatcherInterface $dispatcher, $baseUrl, $directory)
     {
         $this->dispatcher = $dispatcher;
-        $this->baseUrl = $baseUrl;
+        $this->baseUrl = $baseUrl == '/' ? $baseUrl : rtrim($baseUrl, '\\/');
 
         if (!is_dir($directory) || !is_writable($directory)) {
             throw new \InvalidArgumentException('Directory is not writable.');
