@@ -37,7 +37,7 @@ class MaterializedResource extends GenericResource implements Materialized
         }
         $this->resource = $resource;
         $this->path = $this->resource->getPath();
-        $this->directory = rtrim($directory, '/'.DIRECTORY_SEPARATOR);
+        $this->directory = rtrim($directory, '\\/');
 
         if (!file_exists($this->directory.'/'.$this->path)) {
             throw new \InvalidArgumentException('Resource does not exist.');
