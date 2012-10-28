@@ -18,7 +18,13 @@ class GenericResource implements Resource
      */
     public function __construct($path)
     {
-        $this->path = $path;
+        if (!strlen($path)) {
+            throw new \InvalidArgumentException('Path must not be empty.');
+        }
+        if ($path[0] == '/') {
+            throw new \InvalidArgumentException('Path must not be absolute.');
+        }
+        $this->path = rtrim($path, '/');
     }
 
     /**
