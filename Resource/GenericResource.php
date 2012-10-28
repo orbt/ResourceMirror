@@ -24,16 +24,16 @@ class GenericResource implements Resource
      */
     public function __construct($path)
     {
-        if (!strlen($path)) {
-            throw new \InvalidArgumentException('Path must not be empty.');
+        if (strlen($path)) {
+            if ($path[0] == '/') {
+                throw new \InvalidArgumentException('Path must not be absolute.');
+            }
+            if (strpos($path, '..') !== false) {
+                throw new \InvalidArgumentException('Path must be normalized.');
+            }
+            $path = rtrim($path, '/');
         }
-        if ($path[0] == '/') {
-            throw new \InvalidArgumentException('Path must not be absolute.');
-        }
-        if (strpos($path, '..') !== false) {
-            throw new \InvalidArgumentException('Path must be normalized.');
-        }
-        $this->path = rtrim($path, '/');
+        $this->path = $path;
     }
 
     /**
@@ -45,6 +45,14 @@ class GenericResource implements Resource
     }
 
     /**
+     * Returns an array of path segments (split by delimiter '/').
+     */
+    public function getPathSegments()
+    {
+        return strlen($this->path) ? explode('/', $this->path) : array();
+    }
+
+    /**
      * Resolves a relative path based on the path of this resource.
      */
     public function resolvePath($path)
@@ -53,7 +61,7 @@ class GenericResource implements Resource
             throw new \InvalidArgumentException('Cannot resolve absolute path.');
         }
 
-        $segments = explode('/', $this->path);
+        $segments = $this->getPathSegments();
         $path = trim($path, '/');
         foreach (explode('/', trim($path, '/')) as $segment) {
             if ($segment == '.') {
