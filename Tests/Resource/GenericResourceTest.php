@@ -55,4 +55,28 @@ class GenericResourceTest extends \PHPUnit_Framework_TestCase
         $resource = new GenericResource('test');
         $this->assertEquals('test', $resource->getPath());
     }
+
+    /**
+     * A generic resource resolves a relative path.
+     *
+     * @depends testCreate
+     */
+    public function testResolvePath()
+    {
+        $resource = new GenericResource('test');
+        $path = $resource->resolvePath('a/../../../b/./c');
+        $this->assertEquals('../b/c', $path);
+    }
+
+    /**
+     * A generic resource does not resolve an absolute path.
+     *
+     * @depends testCreate
+     * @expectedException \InvalidArgumentException
+     */
+    public function testResolveAbsolutePath()
+    {
+        $resource = new GenericResource('test');
+        $resource->resolvePath('/absolute');
+    }
 }
