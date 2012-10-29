@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Resource Mirror",
     "keywords": [],
-    "homepage": "http://github.com/orbt/ResourceProcessor",
+    "homepage": "http://github.com/orbt/ResourceMirror",
     "license": "MIT",
     "authors": [
         {
