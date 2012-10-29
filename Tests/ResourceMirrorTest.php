@@ -124,6 +124,20 @@ class ResourceMirrorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * A resource mirror materializes a resource.
+     *
+     * @depends testCreate
+     * @expectedException \Orbt\ResourceMirror\Exception\MaterializeException
+     */
+    public function testMaterializeException()
+    {
+        $directory = $this->generateDirectory();
+        $resource = new GenericResource('test');
+        $mirror = new ResourceMirror(new EventDispatcher(), 'invalid://invalid/', $directory);
+        $mirror->materialize($resource);
+    }
+
+    /**
      * A resource mirror materializes a collection of resources.
      *
      * @depends testCreate
