@@ -25,8 +25,8 @@ class FileReplicatorTest extends \PHPUnit_Framework_TestCase
     {
         $directory = $this->generateDirectory();
         $replicator = new FileReplicator('http://example.com/', $directory);
-        $replicator->replicate(new GenericResource('test'));
-        $file = $directory.'/test';
+        $replicator->replicate(new GenericResource('test/nested'));
+        $file = $directory.'/test/nested';
         $this->assertTrue(file_exists($file));
         $this->assertGreaterThan(0, filesize($file));
     }
@@ -51,7 +51,7 @@ class FileReplicatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testReplicateBadDirectory()
     {
-        $replicator = new FileReplicator('http://example.com/', '/probably/a/bad/directory');
+        $replicator = new FileReplicator('http://example.com/', '/@%%:;5#_+');
         $replicator->replicate(new GenericResource('test'));
     }
 
