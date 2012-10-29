@@ -136,7 +136,7 @@ class ResourceMirror
      *   Resource to materialize.
      * @param bool $overwrite
      *   Whether to overwrite a resource if it already exists.
-     * @return Resource\Materialized
+     * @return Resource\MaterializedResource
      *   Materialized resource container, or the given resource if already materialized.
      *
      * @throws MaterializeException
