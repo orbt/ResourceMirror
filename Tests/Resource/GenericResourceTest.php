@@ -78,7 +78,10 @@ class GenericResourceTest extends \PHPUnit_Framework_TestCase
     {
         $resource = new GenericResource('test');
         $path = $resource->resolvePath('a/../../../b/./c');
-        $this->assertEquals('../b/c', $path);
+        $this->assertEquals('../../b/c', $path);
+        $resource = new GenericResource('');
+        $this->assertEquals('a', $resource->resolvePath('a'));
+        $this->assertEquals('../a', $resource->resolvePath('../a'));
     }
 
     /**
