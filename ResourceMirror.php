@@ -182,7 +182,7 @@ class ResourceMirror
         }
 
         $file = $this->directory.'/'.$resource->getPath();
-        mkdir(dirname($file), 0777);
+        @mkdir(dirname($file), 0777, true);
         file_put_contents($file, $resource->getContent());
         return new MaterializedResource($resource, $this->directory);
     }
