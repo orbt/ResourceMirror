@@ -3,6 +3,7 @@
 namespace Orbt\ResourceMirror;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Orbt\ResourceMirror\Exception\ReplicatorException;
 use Orbt\ResourceMirror\Event\ResourceMaterializeEvent;
 use Orbt\ResourceMirror\Event\ResourceEvents;
 use Orbt\ResourceMirror\Resource\Collection;
@@ -147,7 +148,12 @@ class ResourceMirror
         }
 
         if ($overwrite || !$this->exists($resource)) {
-            $this->getReplicator()->replicate($resource);
+            try {
+                $this->getReplicator()->replicate($resource);
+            }
+            catch (ReplicatorException $e) {
+                throw new MaterializeException('Cannot materialize resource.', 0, $e);
+            }
             $materialized = true;
         }
 
