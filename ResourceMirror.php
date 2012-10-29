@@ -145,9 +145,6 @@ class ResourceMirror
         if ($resource instanceof MaterializedResource) {
             return $resource;
         }
-        if (substr($resource->getPath(), 0, 2) == '..') {
-            throw new MaterializeException('Resource is outside of base URL and directory.');
-        }
 
         if ($overwrite || !$this->exists($resource)) {
             $this->getReplicator()->replicate($resource);
