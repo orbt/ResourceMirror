@@ -64,12 +64,16 @@ class GenericResource implements Resource
         }
 
         $segments = $this->getPathSegments();
+        if (!empty($segments)) {
+            // Remove the last segment for relative paths.
+            array_pop($segments);
+        }
         $path = trim($path, '/');
         foreach (explode('/', trim($path, '/')) as $segment) {
             if ($segment == '.') {
                 continue;
             }
-            elseif ($segment == '..' && !empty($segments)) {
+            elseif ($segment == '..' && !empty($segments) && end($segments) != '..') {
                 array_pop($segments);
             }
             else {
