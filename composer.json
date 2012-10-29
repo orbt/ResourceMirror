@@ -1,7 +1,7 @@
 {
     "name": "orbt/resource-mirror",
     "type": "library",
-    "description": "Resource Mirror",
+    "description": "Resource Mirror is a library for mirroring webpage resources in a local directory for serving over the web as a mirror.",
     "keywords": [],
     "homepage": "http://github.com/orbt/ResourceMirror",
     "license": "MIT",
