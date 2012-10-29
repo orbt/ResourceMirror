@@ -19,7 +19,7 @@ class ResourceEvent extends Event
      */
     public function __construct($resource)
     {
-        $this->resource;
+        $this->resource = $resource;
     }
 
     /**
