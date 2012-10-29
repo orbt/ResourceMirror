@@ -3,6 +3,7 @@
 namespace Orbt\ResourceMirror\Tests;
 
 use Orbt\ResourceMirror\ResourceMirror;
+use Orbt\ResourceMirror\Resource\MaterializedResource;
 use Orbt\ResourceMirror\Tests\Fixtures\ResourceEventSubscriber;
 use Orbt\ResourceMirror\Resource\Collection;
 use Orbt\ResourceMirror\Resource\GenericResource;
@@ -105,6 +106,21 @@ class ResourceMirrorTest extends \PHPUnit_Framework_TestCase
         $mirror = new ResourceMirror(new EventDispatcher(), 'http://example.com/', $directory);
         $mirror->materialize($resource);
         $this->assertTrue($mirror->exists($resource));
+    }
+
+    /**
+     * A resource mirror does not act on an already materialized resource.
+     *
+     * @depends testCreate
+     */
+    public function testMaterializeExisting()
+    {
+        $directory = sys_get_temp_dir();
+        touch($directory.'/test');
+        $resource = new MaterializedResource(new GenericResource('test'), $directory);
+        $mirror = new ResourceMirror(new EventDispatcher(), 'http://example.com/', $directory);
+        $result = $mirror->materialize($resource);
+        $this->assertTrue($result === $resource);
     }
 
     /**
