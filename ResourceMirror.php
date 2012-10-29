@@ -181,7 +181,9 @@ class ResourceMirror
             throw new \InvalidArgumentException('Resource is not local.');
         }
 
-        file_put_contents($this->directory.'/'.$resource->getPath(), $resource->getContent());
+        $file = $this->directory.'/'.$resource->getPath();
+        mkdir(dirname($file), 0777);
+        file_put_contents($file, $resource->getContent());
         return new MaterializedResource($resource, $this->directory);
     }
 
