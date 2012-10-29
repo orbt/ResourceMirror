@@ -65,7 +65,7 @@ class ResourceMirror
     }
 
     /**
-     * Returns the base URL of this mirror.
+     * Returns the base URL of resources to mirror.
      * @return string
      */
     public function getBaseUrl()
