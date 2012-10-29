@@ -170,12 +170,19 @@ class ResourceMirror
      * Stores a local resource. Existing files are overwritten.
      *
      * @param LocalResource $resource
+     * @return MaterializedResource
+     *
+     * @throws \InvalidArgumentException
+     *   If given resource is not local.
      */
     public function store($resource)
     {
-        if ($resource instanceof LocalResource) {
-            file_put_contents($this->directory.'/'.$resource->getPath(), $resource->getContent());
+        if (!$resource instanceof LocalResource) {
+            throw new \InvalidArgumentException('Resource is not local.');
         }
+
+        file_put_contents($this->directory.'/'.$resource->getPath(), $resource->getContent());
+        return new MaterializedResource($resource, $this->directory);
     }
 
     /**
