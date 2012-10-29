@@ -15,4 +15,15 @@ class ResourceEventTest extends \PHPUnit_Framework_TestCase
         $event = new ResourceEvent(new GenericResource('test'));
         $this->assertInstanceOf('Orbt\ResourceMirror\Event\ResourceEvent', $event);
     }
+
+    /**
+     * A resource event returns its resource.
+     *
+     * @depends testCreate
+     */
+    public function testGetResource()
+    {
+        $event = new ResourceEvent(new GenericResource('test'));
+        $this->assertInstanceOf('Orbt\ResourceMirror\Resource\Resource', $event->getResource());
+    }
 }
