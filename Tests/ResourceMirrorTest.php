@@ -3,6 +3,7 @@
 namespace Orbt\ResourceMirror\Tests;
 
 use Orbt\ResourceMirror\ResourceMirror;
+use Orbt\ResourceMirror\Resource\LocalResource;
 use Orbt\ResourceMirror\Resource\MaterializedResource;
 use Orbt\ResourceMirror\Tests\Fixtures\ResourceEventSubscriber;
 use Orbt\ResourceMirror\Resource\Collection;
@@ -92,6 +93,33 @@ class ResourceMirrorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mirror->exists($resource));
         touch($directory.'/test');
         $this->assertTrue($mirror->exists($resource));
+    }
+
+    /**
+     * A resource mirror stores a local resource.
+     *
+     * @depends testExists
+     */
+    public function testStore()
+    {
+        $directory = $this->generateDirectory();
+        $resource = new LocalResource('test', 'test content');
+        $mirror = new ResourceMirror(new EventDispatcher(), 'http://example.com/', $directory);
+        $materializedResource = $mirror->store($resource);
+        $this->assertTrue($mirror->exists($resource));
+        $this->assertGreaterThan(0, filesize($materializedResource->getRealPath()));
+    }
+
+    /**
+     * A resource mirror does not store a non-local resource.
+     *
+     * @depends testCreate
+     * @expectedException \InvalidArgumentException
+     */
+    public function testStoreNonLocal()
+    {
+        $mirror = new ResourceMirror(new EventDispatcher(), 'http://example.com/', sys_get_temp_dir());
+        $mirror->store(new GenericResource('test'));
     }
 
     /**
