@@ -39,6 +39,7 @@ class FileReplicator implements Replicator
             throw new ReplicatorException('Cannot open URL for reading.');
         }
         $file = $this->directory.$resource->getPath();
+        @mkdir(dirname($file), 0777, true);
         if (!$target = @fopen($file, 'w')) {
             fclose($source);
             throw new ReplicatorException('Cannot open local file for writing.');
