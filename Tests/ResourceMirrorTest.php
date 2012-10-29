@@ -3,6 +3,8 @@
 namespace Orbt\ResourceMirror\Tests;
 
 use Orbt\ResourceMirror\ResourceMirror;
+use Orbt\ResourceMirror\Tests\Fixtures\ResourceEventSubscriber;
+use Orbt\ResourceMirror\Resource\Collection;
 use Orbt\ResourceMirror\Resource\GenericResource;
 use Orbt\ResourceMirror\Resource\FileReplicator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -89,6 +91,51 @@ class ResourceMirrorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($mirror->exists($resource));
         touch($directory.'/test');
         $this->assertTrue($mirror->exists($resource));
+    }
+
+    /**
+     * A resource mirror materializes a resource.
+     *
+     * @depends testCreate
+     */
+    public function testMaterialize()
+    {
+        $directory = $this->generateDirectory();
+        $resource = new GenericResource('test');
+        $mirror = new ResourceMirror(new EventDispatcher(), 'http://example.com/', $directory);
+        $mirror->materialize($resource);
+        $this->assertTrue($mirror->exists($resource));
+    }
+
+    /**
+     * A resource mirror materializes a collection of resources.
+     *
+     * @depends testCreate
+     */
+    public function testMaterializeCollection()
+    {
+        $directory = $this->generateDirectory();
+        $resource = new GenericResource('test');
+        $collection = new Collection();
+        $collection->add($resource);
+        $mirror = new ResourceMirror(new EventDispatcher(), 'http://example.com/', $directory);
+        $mirror->materializeCollection($collection);
+        $this->assertTrue($mirror->exists($resource));
+    }
+
+    /**
+     * A resource mirror dispatches a resource materialize event.
+     */
+    public function testMaterializeEvent()
+    {
+        $dispatcher = new EventDispatcher();
+        $subscriber = new ResourceEventSubscriber();
+        $dispatcher->addSubscriber($subscriber);
+        $directory = $this->generateDirectory();
+        $resource = new GenericResource('test');
+        $mirror = new ResourceMirror($dispatcher, 'http://example.com/', $directory);
+        $materializedResource = $mirror->materialize($resource);
+        $this->assertEquals($materializedResource, reset($subscriber->resources));
     }
 
     protected function generateDirectory()
