@@ -16,6 +16,27 @@ This library contains these main components:
   collection with completely different resources (e.g. by aggregating them).
 * `ResourceEvent`: Event dispatched containing a resource collection.
 
+Installation using Composer
+---------------------------
+
+Add the following to the `"require"` list in your `composer.json` file:
+
+```
+    "orbt/resource-mirror": "dev-master"
+```
+
+Run composer to update dependencies:
+
+```bash
+$ composer update
+```
+
+Or to just download this library:
+
+```bash
+$ composer update orbt/resource-mirror
+```
+
 License
 -------
 
