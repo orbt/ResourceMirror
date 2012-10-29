@@ -103,7 +103,7 @@ class ResourceMirrorTest extends \PHPUnit_Framework_TestCase
     public function testStore()
     {
         $directory = $this->generateDirectory();
-        $resource = new LocalResource('test', 'test content');
+        $resource = new LocalResource('test/nested', 'test content');
         $mirror = new ResourceMirror(new EventDispatcher(), 'http://example.com/', $directory);
         $materializedResource = $mirror->store($resource);
         $this->assertTrue($mirror->exists($resource));
