@@ -40,4 +40,4 @@ $ composer update orbt/resource-mirror
 License
 -------
 
-This library is licensed under the MIT License. Full license terms are available in the included LICENSE file.
+This library is licensed under the MIT License. See the LICENSE file for detailed license information.
