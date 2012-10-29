@@ -10,6 +10,7 @@ use Orbt\ResourceMirror\Resource\Collection;
 use Orbt\ResourceMirror\Exception\MaterializeException;
 use Orbt\ResourceMirror\Resource\FileReplicator;
 use Orbt\ResourceMirror\Resource\MaterializedResource;
+use Orbt\ResourceMirror\Resource\LocalResource;
 
 /**
  * Main service for materializing services.
@@ -163,6 +164,18 @@ class ResourceMirror
         }
 
         return $materializedResource;
+    }
+
+    /**
+     * Stores a local resource. Existing files are overwritten.
+     *
+     * @param LocalResource $resource
+     */
+    public function store($resource)
+    {
+        if ($resource instanceof LocalResource) {
+            file_put_contents($this->directory.'/'.$resource->getPath(), $resource->getContent());
+        }
     }
 
     /**
