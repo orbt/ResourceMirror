@@ -153,7 +153,7 @@ class ResourceMirror
                 $this->getReplicator()->replicate($resource);
             }
             catch (ReplicatorException $e) {
-                throw new MaterializeException('Cannot materialize resource.', 0, $e);
+                throw new MaterializeException(sprintf('Cannot materialize resource: %s', $e->getMessage()), 0, $e);
             }
             $materialized = true;
         }
