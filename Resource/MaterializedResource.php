@@ -32,11 +32,12 @@ class MaterializedResource extends GenericResource implements Materialized
      */
     public function __construct($resource, $directory)
     {
+        parent::__construct($resource->getPath());
+
         if ($resource instanceof MaterializedResource) {
             throw new \InvalidArgumentException('Resource is already materialized.');
         }
         $this->resource = $resource;
-        $this->path = $this->resource->getPath();
         $this->directory = rtrim($directory, '\\/');
 
         if (!file_exists($this->directory.'/'.$this->path)) {
