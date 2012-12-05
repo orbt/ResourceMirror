@@ -36,13 +36,13 @@ class FileReplicator implements Replicator
     {
         $url = $this->baseUrl.$resource->getPath();
         if (!$source = @fopen($url, 'rb')) {
-            throw new ReplicatorException('Cannot open URL for reading.');
+            throw new ReplicatorException(sprintf('Cannot open URL "%s" for reading.', $url));
         }
         $file = $this->directory.$resource->getPath();
         @mkdir(dirname($file), 0777, true);
         if (!$target = @fopen($file, 'wb')) {
             fclose($source);
-            throw new ReplicatorException('Cannot open local file for writing.');
+            throw new ReplicatorException(sprintf('Cannot open local file "%s" for writing.', $file));
         }
         stream_copy_to_stream($source, $target);
         fclose($source);
